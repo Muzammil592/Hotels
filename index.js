@@ -48,6 +48,7 @@ const express = require('express')
 const app = express()
 const db=require('./db')
 const bodyParser=require('body-parser')
+require('dotenv').config()
 app.use(bodyParser.json())
 
 // respond with "hello world" when a GET request is made to the homepage
@@ -63,6 +64,8 @@ app.use('/person',personRoutes)
 app.use('/menu',menuRoutes)
 app.use('/customer',customerRoutes)
 
-app.listen(3000,()=>{
+const PORT=process.env.PORT||3000
+
+app.listen(PORT,()=>{
     console.log("Server is listening on 3000")
 })

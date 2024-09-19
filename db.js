@@ -1,6 +1,8 @@
 const mongoose=require('mongoose')
+require('dotenv').config()
+const mongourl=process.env.local_url
 
-const mongourl='mongodb://127.0.0.1:27017/hotel'
+// const mongourl=process.env.DB_URL
 
 mongoose.connect(mongourl,{
     useUnifiedTopology:true
