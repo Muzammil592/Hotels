@@ -48,11 +48,28 @@ const express = require('express')
 const app = express()
 const db=require('./db')
 const bodyParser=require('body-parser')
+const passport=require('./auth')
 require('dotenv').config()
+
 app.use(bodyParser.json())
 
+const loggerReq=(req,res,next)=>{
+  console.log(`[${new Date().toLocaleString()}] Request made to URL : ${req.originalUrl}`)
+  next() //Agar isko comment kr denge tou ye isi middleware pe rehay ga aglay step pe nai jayega
+  //next tells the express that this middleware has done its work so give access to the next middleware
+}
+
+app.use(loggerReq) //Ye express ko bata rha ha k ye middleware tamam routes k liye chalan hi chalana ha
 // respond with "hello world" when a GET request is made to the homepage
-app.get('/', (req, res) => {
+//app.get('/',loggerReq,()=>{
+ // })
+
+
+app.use(passport.initialize())
+
+const localauth=passport.authenticate('local',{session:false})
+
+app.get('/',(req, res) => {
   res.send('hey I am your waiter to serve you please tell me about your choice')
 })
 
@@ -60,7 +77,7 @@ const personRoutes=require('./routes/personRoutes')
 const menuRoutes=require('./routes/menuRoutes')
 const customerRoutes=require('./routes/customerRoutes')
 
-app.use('/person',personRoutes)
+app.use('/person',localauth, personRoutes)
 app.use('/menu',menuRoutes)
 app.use('/customer',customerRoutes)
 
