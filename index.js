@@ -77,7 +77,7 @@ const personRoutes=require('./routes/personRoutes')
 const menuRoutes=require('./routes/menuRoutes')
 const customerRoutes=require('./routes/customerRoutes')
 
-app.use('/person',localauth, personRoutes)
+app.use('/person', personRoutes)
 app.use('/menu',menuRoutes)
 app.use('/customer',customerRoutes)
 
